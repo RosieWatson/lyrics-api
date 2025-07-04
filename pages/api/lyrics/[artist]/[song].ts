@@ -32,11 +32,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ]
       },
       select: {
-        id: true,
-        title: true,
-        artist: true,
-        album: true,
-        year: true,
         lyrics: true
       }
     });
@@ -45,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(404).json({ error: 'Song not found' });
     }
     
-    return res.json(songData);
+    return res.json({ lyrics: songData.lyrics });
     
   } catch (error) {
     console.error('API Error:', error);
