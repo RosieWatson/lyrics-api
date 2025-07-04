@@ -179,27 +179,6 @@ const Home: React.FC = () => {
       <Endpoint>
         <h3>
           <MethodBadge method="GET">GET</MethodBadge>
-          Health Check
-        </h3>
-        <EndpointUrl>/api/health</EndpointUrl>
-        <Description>
-          Check if the API is running and environment variables are configured.
-        </Description>
-        <TryButton onClick={() => tryEndpoint('/api/health')}>Try it</TryButton>
-        <Example>{`Response:
-{
-  "status": "OK",
-  "timestamp": "2024-07-04T12:00:00.000Z",
-  "env": {
-    "hasDbUrl": true,
-    "hasDirectUrl": true
-  }
-}`}</Example>
-      </Endpoint>
-
-      <Endpoint>
-        <h3>
-          <MethodBadge method="GET">GET</MethodBadge>
           Get Lyrics by Artist and Song
         </h3>
         <EndpointUrl>/api/lyrics/{'{artist}'}/{'{song}'}</EndpointUrl>
