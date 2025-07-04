@@ -32,16 +32,6 @@ const Subtitle = styled.p`
   opacity: 0.9;
 `;
 
-const StatusBadge = styled.span`
-  display: inline-block;
-  padding: 4px 8px;
-  background: #10b981;
-  color: white;
-  border-radius: 4px;
-  font-size: 0.8em;
-  margin-left: 10px;
-`;
-
 const Endpoint = styled.div`
   background: white;
   border-radius: 8px;
@@ -173,7 +163,6 @@ const Home: React.FC = () => {
       <Header>
         <Title>🎵 Lyrics API</Title>
         <Subtitle>Get song lyrics by artist and song name</Subtitle>
-        <StatusBadge>LIVE</StatusBadge>
       </Header>
 
       <Endpoint>
