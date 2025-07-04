@@ -158,15 +158,23 @@ fastify.post('/api/songs', async (request, reply) => {
   }
 });
 
-// Start server
-const start = async () => {
-  try {
-    const port = parseInt(process.env.PORT || '3000');
-    await fastify.listen({ port, host: '0.0.0.0' });
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-};
+// Export handler for Vercel
+export default async function handler(req: any, res: any) {
+  await fastify.ready();
+  fastify.server.emit('request', req, res);
+}
 
-start();
+// Start server for local development
+if (process.env.NODE_ENV !== 'production') {
+  const start = async () => {
+    try {
+      const port = parseInt(process.env.PORT || '3000');
+      await fastify.listen({ port, host: '0.0.0.0' });
+    } catch (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
+  };
+  
+  start();
+}
