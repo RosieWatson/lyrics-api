@@ -91,13 +91,6 @@ const TryButton = styled.button`
   }
 `;
 
-const Footer = styled.div`
-  text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  color: #64748b;
-  font-size: 0.9em;
-`;
 
 
 const Home: React.FC = () => {
@@ -188,10 +181,6 @@ Content-Type: application/json
 }`}</Example>
       </Endpoint>
 
-      <Footer>
-        <p>Built with Fastify, Prisma, and deployed on Vercel</p>
-        <p>Base URL: <code>{baseUrl}</code></p>
-      </Footer>
 
     </Container>
   );
