@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -99,43 +99,8 @@ const Footer = styled.div`
   font-size: 0.9em;
 `;
 
-const Modal = styled.div<{ isOpen: boolean }>`
-  display: ${props => props.isOpen ? 'block' : 'none'};
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-`;
-
-const ModalContent = styled.div`
-  background: #1e293b;
-  color: #e2e8f0;
-  margin: 5% auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-  font-family: 'Monaco', 'Menlo', monospace;
-`;
-
-const CloseButton = styled.button`
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-  margin-bottom: 10px;
-`;
 
 const Home: React.FC = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [responseData, setResponseData] = useState('');
-  const [currentEndpoint, setCurrentEndpoint] = useState('');
   const [baseUrl, setBaseUrl] = useState('https://your-app.vercel.app');
 
   useEffect(() => {
@@ -144,18 +109,9 @@ const Home: React.FC = () => {
     }
   }, []);
 
-  const tryEndpoint = async (endpoint: string) => {
-    try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      setResponseData(JSON.stringify(data, null, 2));
-      setCurrentEndpoint(endpoint);
-      setModalOpen(true);
-    } catch (error) {
-      setResponseData(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      setCurrentEndpoint(endpoint);
-      setModalOpen(true);
-    }
+  const tryEndpoint = (endpoint: string) => {
+    const fullUrl = `${baseUrl}${endpoint}`;
+    window.open(fullUrl, '_blank');
   };
 
   return (
@@ -175,7 +131,7 @@ const Home: React.FC = () => {
           Retrieve only the lyrics for a specific song by providing the artist name and song title.
         </Description>
         <TryButton onClick={() => tryEndpoint('/api/lyrics/Coldplay/Yellow')}>
-          Try with Coldplay - Yellow
+          Try it
         </TryButton>
         <Example>{`Example: GET /api/lyrics/Coldplay/Yellow
 
@@ -237,13 +193,6 @@ Content-Type: application/json
         <p>Base URL: <code>{baseUrl}</code></p>
       </Footer>
 
-      <Modal isOpen={modalOpen}>
-        <ModalContent>
-          <CloseButton onClick={() => setModalOpen(false)}>Close</CloseButton>
-          <h2>Response from {currentEndpoint}</h2>
-          <pre>{responseData}</pre>
-        </ModalContent>
-      </Modal>
     </Container>
   );
 };
