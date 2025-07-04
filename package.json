@@ -2,12 +2,10 @@
   "name": "lyrics-api",
   "version": "1.0.0",
   "description": "API for retrieving song lyrics",
-  "main": "dist/index.js",
   "scripts": {
     "build": "next build",
     "start": "next start",
     "dev": "next dev",
-    "api:dev": "tsx watch src/index.ts",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
