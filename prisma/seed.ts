@@ -1,59 +1,46 @@
 import { PrismaClient } from '@prisma/client';
 import { withAccelerate } from '@prisma/extension-accelerate';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
-async function main() {
-  // Create Yellow by Coldplay
-  const yellowSong = await prisma.song.create({
-    data: {
-      title: 'Yellow',
-      artist: 'Coldplay',
-      album: 'Parachutes',
-      year: 2000,
-      genre: 'Alternative Rock',
-      duration: 269, // 4:29 in seconds
-      lyrics: `Look at the stars
-Look how they shine for you
-And everything you do
-Yeah, they were all yellow
-I came along
-I wrote a song for you
-And all the things you do
-And it was called, "Yellow"
-So then I took my turn
-Oh, what a thing to have done
-And it was all yellow
-Your skin, oh yeah, your skin and bones
-Turn into something beautiful
-And you know, you know I love you so
-You know I love you so
-I swam across
-I jumped across for you
-Oh, what a thing to do
-'Cause you were all yellow
-I drew a line
-I drew a line for you
-Oh, what a thing to do
-And it was all yellow
-And your skin, oh yeah, your skin and bones
-Turn into something beautiful
-And you know, for you, I'd bleed myself dry
-For you, I'd bleed myself dry
-It's true
-Look how they shine for you
-Look how they shine for you
-Look how they shine for
-Look how they shine for you
-Look how they shine for you
-Look how they shine
-Look at the stars
-Look how they shine for you
-And all the things that you do`
-    }
-  });
+interface Song {
+  title: string;
+  artist: string;
+  album: string;
+  year: number;
+  genre: string;
+  duration: number;
+  lyrics: string;
+}
 
-  console.log('Created song:', yellowSong);
+async function main() {
+  // Read songs from JSON file
+  const songsPath = path.join(__dirname, 'songs.json');
+  const songsData = fs.readFileSync(songsPath, 'utf8');
+  const songs: Song[] = JSON.parse(songsData);
+
+  console.log(`Seeding ${songs.length} songs...`);
+
+  // Create all songs
+  for (const song of songs) {
+    const createdSong = await prisma.song.create({
+      data: {
+        title: song.title,
+        artist: song.artist,
+        album: song.album,
+        year: song.year,
+        genre: song.genre,
+        duration: song.duration,
+        lyrics: song.lyrics
+      }
+    });
+    
+    console.log(`Created: ${createdSong.title} by ${createdSong.artist}`);
+  }
+
+  console.log('Seeding completed!');
 }
 
 main()
