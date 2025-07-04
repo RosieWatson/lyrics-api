@@ -1,5 +1,7 @@
 # Lyrics API
 
+[https://song--lyrics.vercel.app](https://song--lyrics.vercel.app)
+
 A RESTful API for retrieving song lyrics built with Fastify and Prisma.
 
 ## Features
@@ -66,7 +68,7 @@ cp .env.example .env
 Edit `.env` with your Prisma Postgres credentials:
 ```
 DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=YOUR_API_KEY"
-DIRECT_URL="postgresql://your-direct-connection-string"
+DIRECT_URL="prisma://accelerate.prisma-data.net/?api_key=YOUR_API_KEY"
 ```
 
 4. Generate Prisma client:
@@ -79,7 +81,12 @@ npm run db:generate
 npm run db:push
 ```
 
-6. Start development server:
+6. Seed database:
+```bash
+npm run db:seed
+```
+
+7. Start development server:
 ```bash
 npm run dev
 ```
