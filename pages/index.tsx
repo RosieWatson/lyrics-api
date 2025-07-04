@@ -158,28 +158,6 @@ Response:
 ]`}</Example>
       </Endpoint>
 
-      <Endpoint>
-        <h3>
-          <MethodBadge method="POST">POST</MethodBadge>
-          Add New Song
-        </h3>
-        <EndpointUrl>/api/songs</EndpointUrl>
-        <Description>
-          Add a new song with lyrics to the database.
-        </Description>
-        <Example>{`POST /api/songs
-Content-Type: application/json
-
-{
-  "title": "Song Title",
-  "artist": "Artist Name",
-  "album": "Album Name",
-  "year": 2024,
-  "genre": "Genre",
-  "lyrics": "Song lyrics here...",
-  "duration": 180
-}`}</Example>
-      </Endpoint>
 
 
     </Container>

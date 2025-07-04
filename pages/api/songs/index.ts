@@ -13,54 +13,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).end();
   }
 
-  try {
-    if (req.method === 'GET') {
-      const songs = await prisma.song.findMany({
-        select: {
-          id: true,
-          title: true,
-          artist: true,
-          album: true,
-          year: true,
-          genre: true,
-          duration: true
-        }
-      });
-      
-      return res.json(songs);
-    }
-
-    if (req.method === 'POST') {
-      const { title, artist, album, year, genre, lyrics, duration } = req.body as {
-        title: string;
-        artist: string;
-        album?: string;
-        year?: number;
-        genre?: string;
-        lyrics: string;
-        duration?: number;
-      };
-      
-      if (!title || !artist || !lyrics) {
-        return res.status(400).json({ error: 'Title, artist, and lyrics are required' });
-      }
-      
-      const song = await prisma.song.create({
-        data: {
-          title,
-          artist,
-          album,
-          year,
-          genre,
-          lyrics,
-          duration
-        }
-      });
-      
-      return res.status(201).json(song);
-    }
-
+  if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const songs = await prisma.song.findMany({
+      select: {
+        id: true,
+        title: true,
+        artist: true,
+        album: true,
+        year: true,
+        genre: true,
+        duration: true
+      }
+    });
+    
+    return res.json(songs);
     
   } catch (error) {
     console.error('API Error:', error);
