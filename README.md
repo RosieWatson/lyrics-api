@@ -2,7 +2,7 @@
 
 [https://song--lyrics.vercel.app](https://song--lyrics.vercel.app)
 
-A RESTful API for retrieving song lyrics built with Fastify and Prisma.
+A RESTful API for retrieving song lyrics built with NextJS and Prisma, deployed to Vercel.
 
 ## Features
 
