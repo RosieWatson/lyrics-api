@@ -204,7 +204,7 @@ const Home: React.FC = () => {
         </h3>
         <EndpointUrl>/api/lyrics/{'{artist}'}/{'{song}'}</EndpointUrl>
         <Description>
-          Retrieve lyrics for a specific song by providing the artist name and song title.
+          Retrieve only the lyrics for a specific song by providing the artist name and song title.
         </Description>
         <TryButton onClick={() => tryEndpoint('/api/lyrics/Coldplay/Yellow')}>
           Try with Coldplay - Yellow
@@ -213,12 +213,7 @@ const Home: React.FC = () => {
 
 Response:
 {
-  "id": "cm123abc",
-  "title": "Yellow",
-  "artist": "Coldplay",
-  "album": "Parachutes",
-  "year": 2000,
-  "lyrics": "Look at the stars..."
+  "lyrics": "Look at the stars\\nLook how they shine for you\\nAnd everything you do\\nYeah, they were all yellow..."
 }`}</Example>
       </Endpoint>
 
