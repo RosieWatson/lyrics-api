@@ -15,13 +15,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const { artist, song } = req.query as { artist: string; song: string };
-  const songData = songs.find(
-    (s) => s.artist.toLowerCase() === artist.toLowerCase() && s.title.toLowerCase() === song.toLowerCase()
-  );
+  const matchingSong = songs.find((candidate) => {
+    const isSameArtist = candidate.artist.toLowerCase() === artist.toLowerCase();
+    const isSameTitle = candidate.title.toLowerCase() === song.toLowerCase();
+    return isSameArtist && isSameTitle;
+  });
 
-  if (!songData) {
+  if (!matchingSong) {
     return res.status(404).json({ error: 'Song not found' });
   }
 
-  return res.json({ lyrics: songData.lyrics });
+  return res.json({ lyrics: matchingSong.lyrics });
 }

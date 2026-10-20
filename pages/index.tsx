@@ -48,7 +48,7 @@ Response:
         </h3>
         <div className="endpoint-url">/api/songs</div>
         <div className="description">
-          Retrieve a list of all songs in the database (without lyrics).
+          Retrieve a list of all songs (without lyrics).
         </div>
         <button className="try-button" onClick={() => tryEndpoint('/api/songs')}>Try it</button>
         <pre className="example">{`Response:
