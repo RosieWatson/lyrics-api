@@ -1,116 +1,50 @@
 # Lyrics API
 
-[https://song--lyrics.vercel.app](https://song--lyrics.vercel.app)
+live: _deploy URL to come_
 
-A RESTful API for retrieving song lyrics built with NextJS and Prisma, deployed to Vercel.
+a tiny read-only API for song lyrics, built with Next.js and deployed to Vercel. the songs live in `data/songs.json`, so there's no database and no env vars.
 
-## Features
+## endpoints
 
-- Get lyrics by artist and song name
-- Search songs by title or artist
-- Create new songs with lyrics
-- PostgreSQL database with Prisma ORM
-- Docker support for easy deployment
+### `GET /api/songs`
 
-## API Endpoints
+returns every song, without lyrics.
 
-### Get Lyrics by Artist and Song
+```json
+[
+  {
+    "id": "cmcp03i8k00013o0wmes5dc8y",
+    "title": "Yellow",
+    "artist": "Coldplay",
+    "album": "Parachutes",
+    "year": 2000,
+    "genre": "Alternative Rock",
+    "duration": 269
+  }
+]
 ```
-GET /api/lyrics/{artist}/{song}
-```
-Returns lyrics for a specific song by artist and song name.
 
-### Get All Songs
-```
-GET /api/songs
-```
-Returns all songs (without lyrics).
+### `GET /api/lyrics/{artist}/{song}`
 
-### Get Song by ID
-```
-GET /api/songs/{id}
-```
-Returns a specific song with lyrics.
+returns the lyrics for one song. artist and song match case-insensitively, so `/api/lyrics/coldplay/yellow` works too.
 
-### Search Songs
+```json
+{
+  "lyrics": "Look at the stars\nLook how they shine for you\nAnd everything you do\nYeah, they were all yellow\n..."
+}
 ```
-GET /api/songs/search?q={query}
-```
-Search songs by title or artist.
 
-### Create Song
-```
-POST /api/songs
-```
-Create a new song with lyrics.
+an unknown song gives a `404` with `{"error": "Song not found"}`, and anything other than `GET` or `OPTIONS` gives a `405` with `{"error": "Method not allowed"}`.
 
-### Health Check
-```
-GET /health
-```
-Returns API health status.
+## local dev
 
-## Setup
-
-1. Install dependencies:
 ```bash
 npm install
+npm run dev    # http://localhost:3000
+npm test
+npm run build
 ```
 
-2. Set up Prisma Postgres:
-   - Create a project at [Prisma Data Platform](https://console.prisma.io/)
-   - Get your connection string and API key
+## deploy
 
-3. Set up environment variables:
-```bash
-cp .env.example .env
-```
-Edit `.env` with your Prisma Postgres credentials:
-```
-DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=YOUR_API_KEY"
-DIRECT_URL="prisma://accelerate.prisma-data.net/?api_key=YOUR_API_KEY"
-```
-
-4. Generate Prisma client:
-```bash
-npm run db:generate
-```
-
-5. Push database schema:
-```bash
-npm run db:push
-```
-
-6. Seed database:
-```bash
-npm run db:seed
-```
-
-7. Start development server:
-```bash
-npm run dev
-```
-
-## Docker Deployment
-
-1. Build and run with Docker Compose:
-```bash
-docker-compose up --build
-```
-
-The API will be available at `http://localhost:3000`.
-
-## Database Schema
-
-The API uses a PostgreSQL database with the following schema:
-
-- `id`: Unique identifier
-- `title`: Song title
-- `artist`: Artist name
-- `album`: Album name (optional)
-- `year`: Release year (optional)
-- `genre`: Music genre (optional)
-- `lyrics`: Song lyrics
-- `duration`: Song duration in seconds (optional)
-- `createdAt`: Creation timestamp
-- `updatedAt`: Last update timestamp
+import the repo into Vercel. it detects Next.js on its own, so there's nothing to configure.
