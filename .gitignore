@@ -33,8 +33,5 @@ Thumbs.db
 # Logs
 *.log
 
-# Prisma
-prisma/migrations/
-
 # TypeScript
 *.tsbuildinfo
